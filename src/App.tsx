@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useContext } from "react";
+import Task from "./components/Task";
+import { Box, Container } from "@mui/material";
+import NewTask from "./components/NewTask";
+import Header from "./components/Header";
+import { ITask } from "./utils/types";
+import { Context } from "./context/context";
 
 function App() {
+  const { store } = useContext(Context);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Container sx={{ marginTop: "2rem" }}>
+        <NewTask />
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+          {store.tasks?.map((task: ITask) => (
+            <Task key={task.id} task={task} />
+          ))}
+        </Box>
+      </Container>
     </div>
   );
 }
